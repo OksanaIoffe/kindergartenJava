@@ -13,19 +13,19 @@ class Group {
         this.children = new ArrayList<>();
     }
 
-    //добавление ребенка
+    //РґРѕР±Р°РІР»РµРЅРёРµ СЂРµР±РµРЅРєР°
     public void addChild(Child child) {
         children.add(child);
     }
 
-    //удаление ребенка
+    //СѓРґР°Р»РµРЅРёРµ СЂРµР±РµРЅРєР°
     public void removeChild(Child child) {
         children.remove(child);
     }
 
-    // Метод отображение детей в группе
+    // РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґРµС‚РµР№ РІ РіСЂСѓРїРїРµ
     public void showChildren() {
-        System.out.println("Группа: " + name + ";" + " Номер:" + number + "");
+        System.out.println("Р“СЂСѓРїРїР°: " + name + ";" + " РќРѕРјРµСЂ:" + number + "");
         for (Child child : children) {
             System.out.println("   " + child);
         }
