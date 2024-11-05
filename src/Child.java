@@ -12,7 +12,7 @@ class Child {
 
     @Override
     public String toString() {
-        return fullName  + ", " + gender + ", Возраст: " + age + "";
+        return fullName  + ", " + gender + ", Р’РѕР·СЂР°СЃС‚: " + age + "";
     }
 
 }
