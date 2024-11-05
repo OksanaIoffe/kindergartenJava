@@ -14,7 +14,7 @@ public class Kindergarten {
     }
 
     public void displayGroups() {
-        System.out.println("Группа в детском саду:");
+        System.out.println("РіСЂСѓРїРїР° РІ РґРµС‚СЃРєРѕРј СЃР°РґСѓ:");
         for (Group group : groups) {
             group.showChildren();
         }
@@ -23,24 +23,24 @@ public class Kindergarten {
     public static void main(String[] args) {
         Kindergarten kindergarten = new Kindergarten();
 
-        Group group1 = new Group("Солнышки", 1);
-        Group group2 = new Group("Тигрята", 2);
+        Group group1 = new Group("РЎРѕР»РЅС‹С€РєРё", 1);
+        Group group2 = new Group("РўРёРіСЂСЏС‚Р°", 2);
 
-        group1.addChild(new Child("Иванов Иван Иванович", "Муж", 4));
-        group1.addChild(new Child("Петрова Мария Петровна", "Жен", 5));
+        group1.addChild(new Child("РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡", "РњСѓР¶", 4));
+        group1.addChild(new Child("РџРµС‚СЂРѕРІР° РњР°СЂРёСЏ РџРµС‚СЂРѕРІРЅР°", "Р–РµРЅ", 5));
 
-        group2.addChild(new Child("Сидоров Алексей Алексеевич", "Муж", 3));
+        group2.addChild(new Child("РЎРёРґРѕСЂРѕРІ РђР»РµРєСЃРµР№ РђР»РµРєСЃРµРµРІРёС‡", "РњСѓР¶", 3));
 
         kindergarten.addGroup(group1);
         kindergarten.addGroup(group2);
 
         kindergarten.displayGroups();
 
-        // Пример редактирования
-        group1.removeChild(new Child("Иванов Иван Иванович", "Mуж", 4)); // Удаляем по значению
-        group1.addChild(new Child("Смирнов Дмитрий Владимирович", "Mуж", 4)); // Добавляем нового ребенка
+        // РїСЂРёРјРµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
+        group1.removeChild(new Child("РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡", "РњСѓР¶", 4)); 
+        group1.addChild(new Child("РЎРјРёСЂРЅРѕРІ Р”РјРёС‚СЂРёР№ Р’Р»Р°РґРёРјРёСЂРѕРІРёС‡", "РњСѓР¶", 4));
 
-        System.out.println("после редактирования:");
+        System.out.println("РџРѕСЃР»Рµ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ:");
         kindergarten.displayGroups();
     }
 }
