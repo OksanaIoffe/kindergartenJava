@@ -1,4 +1,3 @@
-
 class Child {
     private String fullName;
     private String gender;
@@ -10,9 +9,15 @@ class Child {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return fullName  + ", " + gender + ", Возраст: " + age + "";
+    public String getFullName() {
+        return fullName;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }
