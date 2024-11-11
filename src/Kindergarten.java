@@ -1,46 +1,80 @@
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Kindergarten {
+class Kindergarten {
+    private Connection connection;
     private List<Group> groups;
 
     public Kindergarten() {
-        this.groups = new ArrayList<>();
+        groups = new ArrayList<>();
+        initializeDatabase();
     }
 
-
-    public void addGroup(Group group) {
-        groups.add(group);
-    }
-
-    public void displayGroups() {
-        System.out.println("группа в детском саду:");
-        for (Group group : groups) {
-            group.showChildren();
+    private void initializeDatabase() {
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:kindergarten.db");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        Kindergarten kindergarten = new Kindergarten();
+    public void addGroup(String name, int number) {
+        try {
+            Group group = new Group(name, number);
+            groups.add(group);
+            String sql = "INSERT INTO groups (name, number) VALUES (?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setInt(2, number);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Group group1 = new Group("Солнышки", 1);
-        Group group2 = new Group("Тигрята", 2);
+    public void addChildToGroup(String groupName, Child child) {
+        for (Group group : groups) {
+            if (group.getName().equals(groupName)) {
+                group.addChild(child);
+                saveChildToDatabase(child, groupName);
+                return;
+            }
+        }
+        System.out.println("Группа не найдена: " + groupName);
+    }
 
-        group1.addChild(new Child("Иванов Иван Иванович", "Муж", 4));
-        group1.addChild(new Child("Петрова Мария Петровна", "Жен", 5));
+    private void saveChildToDatabase(Child child, String groupName) {
+        try {
+            String sql = "SELECT id FROM groups WHERE name = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, groupName);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int groupId = rs.getInt("id");
+                sql = "INSERT INTO children (fullName, gender, age, groupId) VALUES (?, ?, ?, ?)";
+                pstmt = connection.prepareStatement(sql);
+                pstmt.setString(1, child.getFullName());
+                pstmt.setString(2, child.getGender());
+                pstmt.setInt(3, child.getAge());
+                pstmt.setInt(4, groupId);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        group2.addChild(new Child("Сидоров Алексей Алексеевич", "Муж", 3));
+    public List<Group> getGroups() {
+        return groups;
+    }
 
-        kindergarten.addGroup(group1);
-        kindergarten.addGroup(group2);
-
-        kindergarten.displayGroups();
-
-        // пример редактирования
-        group1.removeChild(new Child("Иванов Иван Иванович", "Муж", 4)); 
-        group1.addChild(new Child("Смирнов Дмитрий Владимирович", "Муж", 4));
-
-        System.out.println("После редактирования:");
-        kindergarten.displayGroups();
+    public void displayGroups() {
+        for (Group group : groups) {
+            System.out.println("Группа: " + group.getName() + " (Номер: " + group.getNumber() + ")");
+            for (Child child : group.getChildren()) {
+                System.out.println("   Ребенок: " + child.getFullName() + ", Пол: " + child.getGender() + ", Возраст: " + child.getAge());
+            }
+        }
     }
 }
