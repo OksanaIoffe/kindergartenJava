@@ -1,6 +1,6 @@
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 class Group {
     private String name;
@@ -13,22 +13,22 @@ class Group {
         this.children = new ArrayList<>();
     }
 
-    //добавление ребенка
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public List<Child> getChildren() {
+        return children;
+    }
+
     public void addChild(Child child) {
         children.add(child);
     }
 
-    //удаление ребенка
     public void removeChild(Child child) {
         children.remove(child);
     }
-
-    // отображение детей в группе
-    public void showChildren() {
-        System.out.println("Группа: " + name + ";" + " Номер:" + number + "");
-        for (Child child : children) {
-            System.out.println("   " + child);
-        }
-    }
-
-}
