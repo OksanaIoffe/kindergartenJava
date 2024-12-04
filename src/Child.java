@@ -1,4 +1,6 @@
-class Child {
+
+
+public class Child {
     private String fullName;
     private String gender;
     private int age;
@@ -9,6 +11,7 @@ class Child {
         this.age = age;
     }
 
+    // Геттеры и сеттеры
     public String getFullName() {
         return fullName;
     }
@@ -19,5 +22,10 @@ class Child {
 
     public int getAge() {
         return age;
+    }
+
+    @Override
+    public String toString() {
+        return "ФИО: " + fullName + ", Пол: " + gender + ", Возраст: " + age;
     }
 }
