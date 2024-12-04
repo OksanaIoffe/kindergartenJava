@@ -1,19 +1,61 @@
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        Kindergarten kindergarten = new Kindergarten();
 
-        kindergarten.addGroup("Солнышки", 1);
-        kindergarten.addGroup("Тигрята", 2);
+        try {
+            KindergartenModel model = new KindergartenModel("jdbc:mysql://localhost:3306/kindergarten", "root", "password");
+            KindergartenView view = new KindergartenView();
+            KindergartenController controller = new KindergartenController(model, view);
 
-        kindergarten.addChildToGroup("Солнышки", new Child("Иванов Иван Иванович", "Муж", 4));
-        kindergarten.addChildToGroup("Солнышки", new Child("Петрова Мария Петровна", "Жен", 5));
-        kindergarten.addChildToGroup("Тигрята", new Child("Сидоров Алексей Алексеевич", "Муж", 3));
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                System.out.println("Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:");
+                System.out.println("1. Р”РѕР±Р°РІРёС‚СЊ РіСЂСѓРїРїСѓ");
+                System.out.println("2. Р”РѕР±Р°РІРёС‚СЊ СЂРµР±РµРЅРєР°");
+                System.out.println("3. РџРѕРєР°Р·Р°С‚СЊ РіСЂСѓРїРїС‹");
+                System.out.println("4. Р’С‹С…РѕРґ");
 
-        // Вывод информации о группах
-        kindergarten.displayGroups();
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // РѕС‡РёСЃС‚РєР° Р±СѓС„РµСЂР°
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹:");
+                        String groupName = scanner.nextLine();
+                        System.out.println("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РіСЂСѓРїРїС‹:");
+                        int groupNumber = scanner.nextInt();
+                        controller.addGroup(groupName, groupNumber);
+                        break;
+                    case 2:
+                        System.out.println("Р’РІРµРґРёС‚Рµ Р¤РРћ СЂРµР±РµРЅРєР°:");
+                        String fullName = scanner.nextLine();
+                        System.out.println("Р’РІРµРґРёС‚Рµ РїРѕР» СЂРµР±РµРЅРєР°:");
+                        String gender = scanner.nextLine();
+                        System.out.println("Р’РІРµРґРёС‚Рµ РІРѕР·СЂР°СЃС‚ СЂРµР±РµРЅРєР°:");
+                        int age = scanner.nextInt();
+                        System.out.println("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РіСЂСѓРїРїС‹:");
+                        int gNumber = scanner.nextInt();
+                        controller.addChild(fullName, gender, age, gNumber);
+                        break;
+                    case 3:
+                        controller.showGroups();
+                        break;
+                    case 4:
+                        model.close();
+                        System.exit(0);
+                    default:
+                        System.out.println("РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
+
