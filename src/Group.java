@@ -1,8 +1,9 @@
-import java.sql.*;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
-class Group {
+public class Group {
     private String name;
     private int number;
     private List<Child> children;
@@ -13,6 +14,15 @@ class Group {
         this.children = new ArrayList<>();
     }
 
+    public void addChild(Child child) {
+        children.add(child);
+    }
+
+    public void removeChild(Child child) {
+        children.remove(child);
+    }
+
+    // Геттеры и сеттеры
     public String getName() {
         return name;
     }
@@ -25,10 +35,8 @@ class Group {
         return children;
     }
 
-    public void addChild(Child child) {
-        children.add(child);
+    @Override
+    public String toString() {
+        return "Группа: " + name + " (Номер: " + number + ")";
     }
-
-    public void removeChild(Child child) {
-        children.remove(child);
-    }
+}
